@@ -60,6 +60,19 @@
         letter-spacing: 1px;
         cursor: pointer;
        }
+
+       .show-QR-container{
+        width: 100%;
+        height: 100%;
+        display: none;
+      
+       }
+
+       .show-QR-container img{
+        width: 250px;
+        height: 250px;
+        margin: 25px auto;
+       }
     </style>
 </head>
 <body>
@@ -71,12 +84,45 @@
                 <h3>Please paste an url to generate QR code</h3>
             </span>
             <div>
-                <input type="text" placeholder="write something" name="url" id="url">
+                <input type="text" placeholder="write something" value="" name="url" id="url">
                 <br><br>
                 <button id="generate">Generate qr</button>
+            </div>
+
+            <div class="show-QR-container">
+                   <a href=" " download id="download" target="_blank">Download QR</a>
+                <img src="" alt="" id="show-QR">
             </div>
         </div>
     </section>
     
+
+    <a href="https://images.unsplash.com/photo-1566438480900-0609be27a4be?q=80&w=1294&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" download="image" target="_blank">download</a>
+
+
+
+    <script>
+
+        const input = document.getElementById("url");
+        const QrBtn = document.getElementById("generate");
+        const QRImg = document.getElementById("show-QR");
+        const imgHref = document.getElementById("download");
+        const qrDiv = document.querySelector(".show-QR-container");
+
+        QrBtn.addEventListener("click", () => {
+          if (input.value === " ") {
+            alert("Please enter something");
+          }
+          else {
+            QRImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${input.value}`;
+            const DownloadURL = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${input.value}`;
+            qrDiv.style.display = "block";
+            imgHref.href = DownloadURL
+            input.value = " ";
+
+            console.log(DownloadURL);
+          }
+        });
+    </script>
 </body>
 </html>
